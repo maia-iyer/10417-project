@@ -23,13 +23,15 @@ def convert_data(filename):
 filename = '/mnt/c/Users/Maia/Downloads/a/Medley-solos-DB_test-0_0a282672-c22c-59ff-faaa-ff9eb73fc8e6.wav.wav'
 #filename = '/mnt/c/Users/Maia/Downloads/a/Medley-solos-DB_test-0_0aed2359-7d66-5da2-f041-8fb5d78b61c1.wav.wav'
 #filename = '/mnt/c/Users/Maia/Downloads/a/Medley-solos-DB_test-5_0a8d62bd-4d37-522d-fc71-75fab6e20a7b.wav.wav'
-#target = '/mnt/c/Users/Maia/Downloads/here.png'
+target = '/mnt/c/Users/Maia/Downloads/here.wav'
 
 audio, sr = librosa.load(filename)
 print(np.shape(audio), np.shape(sr))
-print(audio)
+print(np.min(audio), np.max(audio))
 ftd = librosa.stft(audio)
-print(np.shape(ftd))
+noise = np.random.uniform(-0.001, 0.001, 65536)
+new = audio + noise
+wavfile.write(target, sr, np.array(new*32767, dtype=np.int16))
 #conv, sr, spect = convert_data(filename)
 #write_spect(conv, "testconv.png")
 #write_spect(np.sqrt(np.real(conv)**2 + np.imag(conv)**2), "testconv-norm.png")
